@@ -548,6 +548,28 @@
 
 
   //////////////////////////////////////////////////////////////////////////////
+  // Feeds
+  //////////////////////////////////////////////////////////////////////////////
+
+  melpa.feeds = {};
+  melpa.feeds.view = function() {
+    var feed = function(name, path, type) {
+      var url = melpa.rootURL + path;
+      return m("li", [
+        m("span.feed-name", name),
+        m("a.feed-url", {href: url, type: type}, url)
+      ]);
+    };
+    return m("section.feeds", [
+      m("h4", "Follow updates"),
+      m("ul", [
+        feed("RSS", "/updates.rss", "application/rss+xml"),
+        feed("Org Social", "/social.org", "text/org")
+      ])
+    ]);
+  };
+
+  //////////////////////////////////////////////////////////////////////////////
   // Changing the appearance of the various MELPA archive sites
   //////////////////////////////////////////////////////////////////////////////
 
@@ -636,6 +658,7 @@
         ]),
         m(".col-md-4", [
           melpa.buildstatus.view(ctrl.buildstatus),
+          melpa.feeds.view()
         ])
       ]),
       melpa.packagelist.view(ctrl.packagelist)
